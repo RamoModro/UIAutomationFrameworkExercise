@@ -1,5 +1,4 @@
-﻿using NsTestFrameworkUI.Helpers;
-using UIAutomationFrameworkExercise.Helpers;
+﻿using UIAutomationFrameworkExercise.Helpers;
 
 namespace UIAutomationFrameworkExercise.Tests;
 
@@ -10,8 +9,9 @@ public class BookingRoomTests : BaseTest
 
     public void  WhenBookingARoomSuccessMessageShouldBeDisplayedTest()
     {
-        Console.WriteLine("hello");
-        WaitHelpers.ExplicitWait();
+        Pages.HomePage.ClickBookThisRoomButton();
+        Pages.HomePage.InsertBookingContactDetails("First Name", "Last Name", "email@email.com", "12345678999");
+        Pages.HomePage.ClickBookRoom();
     }
 
 }
