@@ -12,6 +12,8 @@ public class BookingRoomTests : BaseTest
         Pages.HomePage.ClickBookThisRoomButton();
         Pages.HomePage.InsertBookingContactDetails("First Name", "Last Name", "email@email.com", "12345678999");
         Pages.HomePage.ClickBookRoom();
+
+        Pages.HomePage.SelectDates();
     }
 
 }

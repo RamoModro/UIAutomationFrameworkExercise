@@ -1,5 +1,7 @@
-﻿using NsTestFrameworkUI.Pages;
+﻿using NsTestFrameworkUI.Helpers;
+using NsTestFrameworkUI.Pages;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 
 namespace UIAutomationFrameworkExercise.Pages;
 
@@ -11,7 +13,9 @@ public class Homepage
     private readonly By _lastNameInput = By.CssSelector(".room-lastname");
     private readonly By _emailInput = By.CssSelector(".room-email");
     private readonly By _phoneInput = By.CssSelector(".room-phone");
+
     private readonly By _bookRoomButton = By.CssSelector(".btn-outline-primary.book-room");
+    private readonly By _startDate = By.CssSelector(".rbc-calendar .rbc-month-row:nth-child(3) .rbc-date-cell:first-child");
     #endregion
 
     public void ClickBookThisRoomButton()
@@ -30,5 +34,15 @@ public class Homepage
     public void ClickBookRoom()
     {
         _bookRoomButton.ActionClick();
+    }
+
+    public void SelectDates()
+    {
+        var actions = new Actions(Browser.WebDriver);
+
+        var location = Browser.WebDriver.FindElement(_startDate).Location;
+
+        actions.ClickAndHold(Browser.WebDriver.FindElement(_startDate))
+            .MoveByOffset(0, 0);
     }
 }
