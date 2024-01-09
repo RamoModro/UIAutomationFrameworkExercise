@@ -16,6 +16,10 @@ public class Homepage
 
     private readonly By _bookRoomButton = By.CssSelector(".btn-outline-primary.book-room");
     private readonly By _startDate = By.CssSelector(".rbc-calendar .rbc-month-row:nth-child(3) .rbc-date-cell:first-child");
+
+    private readonly By _nextMonthButton = By.CssSelector(".rbc-btn-group:nth-child(1) button:nth-child(3)");
+
+    private readonly By _successBookingMessage = By.CssSelector(".form-row .text-center:nth-child(2)");
     #endregion
 
     public void ClickBookThisRoomButton()
@@ -29,6 +33,9 @@ public class Homepage
         _lastNameInput.ActionSendKeys(lastName);
         _emailInput.ActionSendKeys(email);
         _phoneInput.ActionSendKeys(phone);
+        _nextMonthButton.ActionClick();
+        _nextMonthButton.ActionClick();
+        _nextMonthButton.ActionClick();
     }
 
     public void ClickBookRoom()
@@ -43,6 +50,16 @@ public class Homepage
         var location = Browser.WebDriver.FindElement(_startDate).Location;
 
         actions.ClickAndHold(Browser.WebDriver.FindElement(_startDate))
-            .MoveByOffset(0, 0);
+                .MoveByOffset(20, 10)
+                .MoveByOffset(100, 0)
+                .Release()
+                .Build()
+                .Perform();
+    }
+
+    public bool IsSuccessBookingMessageDisplayed(string message)
+    {
+        WaitHelpers.WaitUntilElementIsVisible(_successBookingMessage);
+        return _successBookingMessage.GetText().Contains(message);
     }
 }

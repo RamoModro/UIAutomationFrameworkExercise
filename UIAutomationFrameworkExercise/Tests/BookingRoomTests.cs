@@ -1,4 +1,5 @@
-﻿using UIAutomationFrameworkExercise.Helpers;
+﻿using FluentAssertions;
+using UIAutomationFrameworkExercise.Helpers;
 
 namespace UIAutomationFrameworkExercise.Tests;
 
@@ -11,9 +12,9 @@ public class BookingRoomTests : BaseTest
     {
         Pages.HomePage.ClickBookThisRoomButton();
         Pages.HomePage.InsertBookingContactDetails("First Name", "Last Name", "email@email.com", "12345678999");
-        Pages.HomePage.ClickBookRoom();
-
         Pages.HomePage.SelectDates();
+        Pages.HomePage.ClickBookRoom();
+        Pages.HomePage.IsSuccessBookingMessageDisplayed("Booking Successful!").Should().BeTrue();       
     }
 
 }

@@ -1,22 +1,32 @@
 ﻿using NsTestFrameworkUI.Helpers;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace UIAutomationFrameworkExercise.Helpers;
 
 public class BaseTest
 {
+    public TestContext TestContext { get; set; }
+
     [TestInitialize]
-    public void Before()
+    public virtual void Before()
     {
         Browser.InitializeDriver(new DriverOptions
         {
+            IsHeadless = false,
             ChromeDriverPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
         });     
         Browser.GoTo("https://automationintesting.online/#/");
+        Browser.WebDriver.Manage().Window.Maximize();
+    }
+
+    [TestCleanup]
+    public virtual void After()
+    {
+        if (TestContext.CurrentTestOutcome.Equals(UnitTestOutcome.Failed))
+        {
+            var path = ScreenShot.GetScreenShotPath(TestContext.TestName);
+            TestContext.AddResultFile(path);
+        }
+        Browser.Cleanup();
     }
 }
