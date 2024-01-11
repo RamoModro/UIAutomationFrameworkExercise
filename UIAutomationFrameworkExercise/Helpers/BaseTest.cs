@@ -15,7 +15,7 @@ public class BaseTest
             IsHeadless = false,
             ChromeDriverPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
         });     
-        Browser.GoTo("https://automationintesting.online/#/");
+        Browser.GoTo(Constants.Url);
         Browser.WebDriver.Manage().Window.Maximize();
     }
 
