@@ -1,4 +1,4 @@
-﻿namespace UIAutomationFrameworkExercise.Helpers.ApiModels
+﻿namespace UIAutomationFrameworkExercise.Helpers.Models.ApiModels
 {
     public class CreateRoomOutput
     {

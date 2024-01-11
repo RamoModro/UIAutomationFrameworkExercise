@@ -3,8 +3,8 @@ using Newtonsoft.Json;
 using NsTestFrameworkApi.RestSharp;
 using RestSharp;
 using UIAutomationFrameworkExercise.Helpers;
-using UIAutomationFrameworkExercise.Helpers.ApiModels;
 using UIAutomationFrameworkExercise.Helpers.Models;
+using UIAutomationFrameworkExercise.Helpers.Models.ApiModels;
 
 
 namespace UIAutomationFrameworkExercise.Tests;
@@ -12,15 +12,15 @@ namespace UIAutomationFrameworkExercise.Tests;
 [TestClass]
 public class BookingRoomTests : BaseTest
 {
-    RestClient client = RequestHelper.GetRestClient(Constants.Url);
-    int roomId;
+    readonly RestClient _client = RequestHelper.GetRestClient(Constants.Url);
+    int _roomId;
 
     [TestInitialize]
     public override void Before()
     {
-        client.AddDefaultHeader("cookie", Constants.CookieToken);
-        var response = client.CreateRequest(ApiResource.Room, new CreateRoomInput(), Method.POST);
-        roomId = JsonConvert.DeserializeObject<CreateRoomOutput>(response.Content).roomId;
+        _client.AddDefaultHeader("cookie", Constants.CookieToken);
+        var response = _client.CreateRequest(ApiResource.Room, new CreateRoomInput(), Method.POST);
+        _roomId = JsonConvert.DeserializeObject<CreateRoomOutput>(response.Content).roomId;
 
         base.Before();
     }
@@ -28,7 +28,7 @@ public class BookingRoomTests : BaseTest
     [TestMethod]
     public void  WhenBookingARoomSuccessMessageShouldBeDisplayedTest()
     {
-        Pages.HomePage.ClickBookThisRoomButton();
+        Pages.HomePage.ClickBookThisRoom();
         Pages.HomePage.CompleteBookingDetails(new UserModel());
         Pages.HomePage.ClickBookRoom();
         Pages.HomePage.IsSuccessBookingMessageDisplayed().Should().BeTrue();       
@@ -37,7 +37,7 @@ public class BookingRoomTests : BaseTest
     [TestCleanup]
     public override void After()
     {
-        client.CreateRequest($"{ApiResource.Room}{roomId}", Method.DELETE);
+        _client.CreateRequest($"{ApiResource.Room}{_roomId}", Method.DELETE);
         base.After();
     }
 }

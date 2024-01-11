@@ -21,11 +21,9 @@ public class Homepage
     private readonly By _successBookingMessage = By.CssSelector(".form-row .text-center:nth-child(2)");
     #endregion
 
-    public void ClickBookThisRoomButton()
+    public void ClickBookThisRoom()
     {
-        //_bookThisRoomButtons.ActionClick();
-        var roomButtons = _bookThisRoomButtons.GetElements();
-        roomButtons.Last().Click();
+        _bookThisRoomButtons.GetElements().Last().Click();
     }
 
     public void CompleteBookingDetails(UserModel user)
@@ -58,7 +56,7 @@ public class Homepage
 
     public bool IsSuccessBookingMessageDisplayed()
     {
-        WaitHelpers.WaitUntilElementIsVisible(_successBookingMessage);
+        _successBookingMessage.WaitUntilElementIsVisible();
         return _successBookingMessage.GetText().Contains("Booking Successful!");
     }
 }
