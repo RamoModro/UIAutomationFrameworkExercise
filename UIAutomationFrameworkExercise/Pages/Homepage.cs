@@ -2,6 +2,7 @@
 using NsTestFrameworkUI.Pages;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using UIAutomationFrameworkExercise.Helpers.Models;
 
 namespace UIAutomationFrameworkExercise.Pages;
 
@@ -27,12 +28,13 @@ public class Homepage
         roomButtons.Last().Click();
     }
 
-    public void InsertBookingContactDetails(string firstName, string lastName, string email, string phone)
+    public void CompleteBookingDetails(UserModel user)
     {
-        _firstNameInput.ActionSendKeys(firstName);
-        _lastNameInput.ActionSendKeys(lastName);
-        _emailInput.ActionSendKeys(email);
-        _phoneInput.ActionSendKeys(phone);
+        _firstNameInput.ActionSendKeys(user.FirstName);
+        _lastNameInput.ActionSendKeys(user.LastName);
+        _emailInput.ActionSendKeys(user.Email);
+        _phoneInput.ActionSendKeys(user.Phone);
+        SelectDates();
     }
 
     public void ClickBookRoom()
@@ -40,7 +42,7 @@ public class Homepage
         _bookRoomButton.ActionClick();
     }
 
-    public void SelectDates()
+    private void SelectDates()
     {
         var actions = new Actions(Browser.WebDriver);
 
@@ -54,9 +56,9 @@ public class Homepage
                 .Perform();
     }
 
-    public bool IsSuccessBookingMessageDisplayed(string message)
+    public bool IsSuccessBookingMessageDisplayed()
     {
         WaitHelpers.WaitUntilElementIsVisible(_successBookingMessage);
-        return _successBookingMessage.GetText().Contains(message);
+        return _successBookingMessage.GetText().Contains("Booking Successful!");
     }
 }
