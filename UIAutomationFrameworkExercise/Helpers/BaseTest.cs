@@ -1,4 +1,6 @@
-﻿using NsTestFrameworkUI.Helpers;
+﻿using NsTestFrameworkApi.RestSharp;
+using NsTestFrameworkUI.Helpers;
+using RestSharp;
 using System.Reflection;
 
 namespace UIAutomationFrameworkExercise.Helpers;
@@ -6,16 +8,17 @@ namespace UIAutomationFrameworkExercise.Helpers;
 public class BaseTest
 {
     public TestContext TestContext { get; set; }
+    public readonly RestClient Client = RequestHelper.GetRestClient(Constants.Url);
 
     [TestInitialize]
     public virtual void Before()
     {
+        SetClientToken();
         Browser.InitializeDriver(new DriverOptions
         {
             IsHeadless = false,
             ChromeDriverPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
         });     
-        Browser.GoTo(Constants.Url);
         Browser.WebDriver.Manage().Window.Maximize();
     }
 
@@ -28,5 +31,11 @@ public class BaseTest
             TestContext.AddResultFile(path);
         }
         Browser.Cleanup();
+    }
+
+    private void SetClientToken()
+    {
+        var token = Client.GetLoginToken();
+        Client.AddDefaultHeader("cookie", $"token={token}");
     }
 }

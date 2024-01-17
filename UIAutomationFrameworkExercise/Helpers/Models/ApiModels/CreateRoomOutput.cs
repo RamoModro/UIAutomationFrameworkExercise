@@ -2,6 +2,8 @@
 {
     public class CreateRoomOutput
     {
-        public int roomId { get; set; }
+        public int roomid { get; set; }
+        public int roomName { get; set; }
+        public string description { get; set; }
     }
 }

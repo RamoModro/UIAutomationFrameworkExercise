@@ -1,7 +1,5 @@
 ﻿using FluentAssertions;
-using Newtonsoft.Json;
-using NsTestFrameworkApi.RestSharp;
-using RestSharp;
+using NsTestFrameworkUI.Helpers;
 using UIAutomationFrameworkExercise.Helpers;
 using UIAutomationFrameworkExercise.Helpers.Models;
 using UIAutomationFrameworkExercise.Helpers.Models.ApiModels;
@@ -12,33 +10,40 @@ namespace UIAutomationFrameworkExercise.Tests;
 [TestClass]
 public class BookingRoomTests : BaseTest
 {
-    readonly RestClient _client = RequestHelper.GetRestClient(Constants.Url);
-    int _roomId;
+    private CreateRoomOutput _createRoomOutput;
 
     [TestInitialize]
     public override void Before()
-    {
-        _client.AddDefaultHeader("cookie", Constants.CookieToken);
-        var response = _client.CreateRequest(ApiResource.Room, new CreateRoomInput(), Method.POST);
-        _roomId = JsonConvert.DeserializeObject<CreateRoomOutput>(response.Content).roomId;
-
+    { 
         base.Before();
+
+        _createRoomOutput = Client.CreateRoom();
     }
 
     [TestMethod]
     public void  WhenBookingARoomSuccessMessageShouldBeDisplayedTest()
     {
-        Pages.HomePage.ClickBookThisRoom();
-        Pages.HomePage.CompleteBookingDetails(new UserModel());
-        Pages.HomePage.ClickBookRoom();
-        Pages.HomePage.IsSuccessBookingMessageDisplayed().Should().BeTrue();       
+        Browser.GoTo(Constants.Url);
+
+        Pages.HomePage.BookThisRoom(_createRoomOutput.description);
+        Pages.HomePage.InsertBookingDetails(new User());
+        Pages.HomePage.BookRoom();
+        Pages.HomePage.IsSuccessMessageDisplayed().Should().BeTrue();       
+    }
+
+    [TestMethod]
+
+    public void WhenCancellingBookingFormShouldNotBeDisplayed()
+    {
+
     }
 
     [TestCleanup]
     public override void After()
-    {
-        _client.CreateRequest($"{ApiResource.Room}{_roomId}", Method.DELETE);
+    { 
         base.After();
+
+        //Client.DeleteRoom(_createRoomOutput.roomid.ToString());
     }
 }
 
