@@ -32,10 +32,15 @@ public class BookingRoomTests : BaseTest
     }
 
     [TestMethod]
-
-    public void WhenCancellingBookingFormShouldNotBeDisplayed()
+    public void WhenCancellingBooking_FormShouldNotBeDisplayedTest()
     {
+        Browser.GoTo(Constants.Url);
 
+        Pages.HomePage.BookThisRoom(_createRoomOutput.description);
+        Pages.HomePage.InsertBookingDetails(new User());
+        Pages.HomePage.CancelBooking();
+        Pages.HomePage.IsBookingFormDisplayed().Should().BeFalse();
+        Pages.HomePage.IsCalendarDisplayed().Should().BeFalse();
     }
 
     [TestCleanup]

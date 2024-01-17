@@ -1,7 +1,6 @@
 ﻿using NsTestFrameworkUI.Helpers;
 using NsTestFrameworkUI.Pages;
 using OpenQA.Selenium;
-using OpenQA.Selenium.Interactions;
 using UIAutomationFrameworkExercise.Helpers.Models;
 
 namespace UIAutomationFrameworkExercise.Pages;
@@ -20,7 +19,9 @@ public class Homepage : CalendarPage
     private readonly By _phoneInput = By.CssSelector(".room-phone");
 
     private readonly By _bookRoomButton = By.CssSelector(".btn-outline-primary.book-room");
-    
+    private readonly By _cancelBookingButton = By.CssSelector(".btn-outline-danger");
+    private readonly By _calendar = By.CssSelector(".rbc-calendar");
+
     private readonly By _successBookingMessage = By.CssSelector(".form-row .text-center:nth-child(2)");
 
     #endregion
@@ -44,9 +45,26 @@ public class Homepage : CalendarPage
 
     public void BookRoom() => _bookRoomButton.ActionClick();
 
+    public void CancelBooking() => _cancelBookingButton.ActionClick();
+
     public bool IsSuccessMessageDisplayed()
     {
         _successBookingMessage.WaitUntilElementIsVisible();
         return _successBookingMessage.GetText().Contains("Booking Successful!");
+    }
+
+    public bool IsBookingFormDisplayed()
+    {
+        return _firstNameInput.IsElementPresent()
+               && _lastNameInput.IsElementPresent()
+               && _emailInput.IsElementPresent()
+               && _phoneInput.IsElementPresent()
+               && _bookRoomButton.IsElementPresent()
+               && _cancelBookingButton.IsElementPresent();
+    }
+
+    public bool IsCalendarDisplayed()
+    {
+        return _calendar.IsElementPresent();
     }
 }
