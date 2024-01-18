@@ -5,7 +5,7 @@ using Constants = UIAutomationFrameworkExercise.Helpers.Constants;
 
 namespace UIAutomationFrameworkExercise.Pages
 {
-    public class CalendarPage
+    public class CalendarPage : BasePage
     {
         public void SelectDates()
         {
