@@ -3,6 +3,7 @@ using NsTestFrameworkUI.Helpers;
 using RestSharp;
 using System.Reflection;
 
+[assembly: Parallelize(Workers = 4, Scope = ExecutionScope.MethodLevel)]
 namespace UIAutomationFrameworkExercise.Helpers;
 
 public class BaseTest

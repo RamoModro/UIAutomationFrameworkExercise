@@ -19,12 +19,24 @@ namespace UIAutomationFrameworkExercise.Helpers
             return JsonConvert.DeserializeObject<CreateRoomOutput>(roomResponse.Content);
         }
 
+        public static void CreateBooking(this RestClient client, CreateBookingInput createBookingInput)
+        {
+            createBookingInput.bookingDates.checkin = createBookingInput.bookingDates.checkin.Remove(8, 2).Insert(8, Constants.BookingStartDay);
+            createBookingInput.bookingDates.checkout = createBookingInput.bookingDates.checkout.Remove(8,2).Insert(8, Constants.BookingEndDay);
+            client.CreateRequest(ApiResource.Booking, createBookingInput, Method.POST);
+        }
+
         public static void DeleteRoom(this RestClient client, string roomName)
         {
             var roomsList = client.GetRooms();
             if (roomsList == null) return;
 
-            var roomId = roomsList.rooms.First(x => x.roomName == int.Parse(roomName)).roomid;
+            var roomId = roomsList.rooms.First(value => value.roomName == int.Parse(roomName)).roomid;
+            client.CreateRequest($"{ApiResource.Room}{roomId}", Method.DELETE);
+        }
+
+        public static void DeleteRoom(this RestClient client, int roomId)
+        {
             client.CreateRequest($"{ApiResource.Room}{roomId}", Method.DELETE);
         }
 
