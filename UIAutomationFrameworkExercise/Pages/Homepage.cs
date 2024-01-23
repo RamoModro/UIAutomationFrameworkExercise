@@ -30,7 +30,7 @@ public class Homepage : CalendarPage
     {
         var descriptions = _descriptions.GetElements();
         var index = descriptions.IndexOf(descriptions.First(x => x.Text == roomDescription));
-        _bookThisRoomButtons.GetElements().Last().Click();
+        _bookThisRoomButtons.GetElements()[index].Click();
     }
 
     public void InsertBookingDetails(User user)

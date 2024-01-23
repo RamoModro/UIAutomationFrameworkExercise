@@ -23,7 +23,7 @@ namespace UIAutomationFrameworkExercise.Helpers
         {
             createBookingInput.bookingDates.checkin = createBookingInput.bookingDates.checkin.Remove(8, 2).Insert(8, Constants.BookingStartDay);
             createBookingInput.bookingDates.checkout = createBookingInput.bookingDates.checkout.Remove(8,2).Insert(8, Constants.BookingEndDay);
-            client.CreateRequest(ApiResource.Booking, createBookingInput,Method.POST);
+            client.CreateRequest(ApiResource.Booking, createBookingInput, Method.POST);
         }
 
         public static void DeleteRoom(this RestClient client, string roomName)
