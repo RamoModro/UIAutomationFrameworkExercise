@@ -9,5 +9,7 @@ namespace UIAutomationFrameworkExercise.Tests
         public static CalendarPage CalendarPage = PageHelpers.InitPage(new CalendarPage());
         public static RoomPage RoomPage = PageHelpers.InitPage(new RoomPage());
         public static LoginPage LoginPage = PageHelpers.InitPage(new LoginPage());
+        public static ReportPage ReportPage = PageHelpers.InitPage(new ReportPage());
+        public static AdminHeaderPage AdminHeaderPage = PageHelpers.InitPage(new AdminHeaderPage());
     }
 }
